@@ -55,7 +55,7 @@
     <div class="ele" onclick="dj(this);">
       <h3>翻译</h3>
       <input type="text" placeholder="需要翻译的内容" id="fan"/>
-      <button onclick="fanyi(fan.value);" id="but">翻译</button>
+      <button id="but">翻译</button>
       <p id="rea"></p>
     </div>
     <div id="past" class="ele" onclick="dj(this);" style="display:none;">
@@ -64,6 +64,7 @@
   </body>
   <script src="informations.js"></script>
   <script>
+    var paststr;
     for(var i=work.length-1;i>=0;i--){
       const works=work[i].hw.replace(/(\d+\.)/g,`<h3 style="display:inline;">$1</h3>`).replace(/Q\/([\s\S]*?)\//g,`<span style="font-weight:700;">$1</span>`).replace(/NEXT/g,`<br>`);
       const needs=work[i].need.replace(/(\d+\.)/g,`<h3 style="display:inline;">$1</h3>`).replace(/NEXT/g,`<br>`);
@@ -77,6 +78,7 @@
     }
     async function fanyi(str){
       if(!str.trim())return;
+      paststr=fan.value;
       fan.value="";
       str=str.trim();
       document.getElementById("rea").innerHTML="";
@@ -90,8 +92,13 @@
         if(past.children.length==1)past.style.display="block";
         document.getElementById("past").innerHTML+=`<br><h3 style="font-size:15px;">${result.front}</h3><p>${reas}</p>`;
       }else{
+        fan.value=paststr;
         document.getElementById("rea").innerHTML=`<h3>翻译结果</h3><p>API返回数据出错</p>`;
       }
     }
+    document.getElementById("but").addEventListener("click",(e)=>{
+      fanyi(fan.value);
+      e.stopPropagation();
+    });
   </script>
 </html>
