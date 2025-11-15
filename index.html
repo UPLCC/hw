@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+  <head>
+	<meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<title>UPLCC-Homework of English</title>
+    <style>
+      *{
+        margin:0;
+        padding:0;
+        transition:all 0.2s ease;
+      }
+      .ele{
+        position:relative;
+        background-color:rgba(0,0,0,0.02);
+        width:90vw;
+        padding:8px;
+        margin-bottom:10px;
+        border-radius:20px;
+        left:50%;
+        top:20px;
+        transform:translate(-50%,0%);
+        box-sizing:border-box;
+      }
+      #fan{
+        display:inline-block;
+        width:73%;
+        height:30px;
+        margin-left:5%;
+        border:1px solid rgba(0,0,0,0.3);
+        background-color:transparent;
+        border-radius:7px;
+        padding:4px;
+        font-size:15px;
+        box-sizing:border-box;
+      }
+      #but{
+        display:inline-block;
+        width:15%;
+        height:30px;
+        margin-left:1%;
+        border:1px solid rgba(0,0,0,0.3);
+        background-color:transparent;
+        border-radius:7px;
+        padding:4px;
+        font-size:15px;
+        box-sizing:border-box;
+      }
+    </style>
+  </head>
+  <body>	
+	<div id="needs" class="ele" onclick="dj(this);">
+      <h3>声明</h3>
+      <p>完成时间，每次返校的第二天的英语课前。检查时间，每次返校后第二天英语课后陆续开始检查。</p>
+    </div>
+    <div class="ele" onclick="dj(this);">
+      <h3>翻译</h3>
+      <input type="text" placeholder="需要翻译的内容" id="fan"/>
+      <button onclick="fanyi(fan.value);" id="but">翻译</button>
+      <p id="rea"></p>
+    </div>
+    <div id="past" class="ele" onclick="dj(this);" style="display:none;">
+      <h3>临时记录</h3>
+    </div>
+  </body>
+  <script src="informations.js"></script>
+  <script>
+    for(var i=work.length-1;i>=0;i--){
+      const works=work[i].hw.replace(/(\d+\.)/g,`<h3 style="display:inline;">$1</h3>`).replace(/Q\/([\s\S]*?)\//g,`<span style="font-weight:700;">$1</span>`).replace(/NEXT/g,`<br>`);
+      const needs=work[i].need.replace(/(\d+\.)/g,`<h3 style="display:inline;">$1</h3>`).replace(/NEXT/g,`<br>`);
+      document.body.innerHTML+=`<div class="ele" onclick="dj(this);"><h3>时间：${work[i].time}</h3><br><h3>翻译句子</h3><p style="display:inline;">${works}</p><br><h3>作业</h3><p>${needs}</p></div>`;
+    }
+    function dj(el){
+      el.style.transform="translate(-50%,0%) scale(0.98)";
+      setTimeout(()=>{
+        el.style.transform="translate(-50%,0%) scale(1)";
+      },200);
+    }
+    async function fanyi(str){
+      if(!str.trim())return;
+      fan.value="";
+      str=str.trim();
+      document.getElementById("rea").innerHTML="";
+      const result=await fetch(`https://api.xiaoy.asia/api/v1/?name=translation_youdao&msg=${encodeURIComponent(str)}`).then(data=>data.json());
+      if(result.msg=="success"){
+        const reas=result.after
+          .replace(/&/g,"&amp;")
+          .replace(/</g,"&lt;")
+          .replace(/>/g,"&gt;");
+        document.getElementById("rea").innerHTML=`<h3>翻译结果</h3><h3 style="font-size:15px;">${result.front}</h3><p>${reas}</p>`;
+        if(past.children.length==1)past.style.display="block";
+        document.getElementById("past").innerHTML+=`<br><h3 style="font-size:15px;">${result.front}</h3><p>${reas}</p>`;
+      }else{
+        document.getElementById("rea").innerHTML=`<h3>翻译结果</h3><p>API返回数据出错</p>`;
+      }
+    }
+  </script>
+</html>
