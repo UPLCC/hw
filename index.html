@@ -45,6 +45,11 @@
         font-size:15px;
         box-sizing:border-box;
       }
+      .wi{
+        position:relative;
+        width:100%;
+        border-radius:10px;
+      }
     </style>
   </head>
   <body>	
@@ -68,7 +73,13 @@
     for(var i=work.length-1;i>=0;i--){
       const works=work[i].hw.replace(/(\d+\.)/g,`<h3 style="display:inline;">$1</h3>`).replace(/Q\/([\s\S]*?)\//g,`<span style="font-weight:700;">$1</span>`).replace(/NEXT/g,`<br>`);
       const needs=work[i].need.replace(/(\d+\.)/g,`<h3 style="display:inline;">$1</h3>`).replace(/NEXT/g,`<br>`);
-      document.body.innerHTML+=`<div class="ele" onclick="dj(this);"><h3>时间：${work[i].time}</h3><br><h3>翻译句子</h3><p style="display:inline;">${works}</p><br><h3>作业</h3><p>${needs}</p></div>`;
+      if(work[i].type){
+        const thissc=work[i].sc;
+        const thistbr=work[i].tbr;
+        document.body.innerHTML+=`<div class="ele" onclick="dj(this);"><h3>时间：${work[i].time}</h3><br><h3>翻译句子</h3><p style="display:inline;">${works}</p><br><h3>作业</h3><p>${needs}</p><br><h3>概要补全(自己找的)</h3><img src="${thissc}" class="wi"/><br><h3>任务型阅读(自己找的)</h3><img src="${thistbr}" class="wi"/></div>`;
+      }else{
+        document.body.innerHTML+=`<div class="ele" onclick="dj(this);"><h3>时间：${work[i].time}</h3><br><h3>翻译句子</h3><p style="display:inline;">${works}</p><br><h3>作业</h3><p>${needs}</p></div>`;
+      }
     }
     function dj(el){
       el.style.transform="translate(-50%,0%) scale(0.98)";
