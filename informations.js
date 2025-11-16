@@ -26,5 +26,13 @@ NEXT
     "sc":"scA.jpg",
     "tbr":"tbrA.jpg",
     "type":true
+  },
+  {
+    "time":"2025-11-16",
+    "hw":"概要补全加任务型阅读",
+    "need":"无",
+    "sc":"scB.jpg",
+    "tbr":"tbrB.png",
+    "type":true
   }
 ];

@@ -76,7 +76,7 @@
       if(work[i].type){
         const thissc=work[i].sc;
         const thistbr=work[i].tbr;
-        document.body.innerHTML+=`<div class="ele" onclick="dj(this);"><h3>时间：${work[i].time}</h3><br><h3>翻译句子</h3><p style="display:inline;">${works}</p><br><h3>作业</h3><p>${needs}</p><br><h3>概要补全(自己找的)</h3><img src="${thissc}" class="wi"/><br><h3>任务型阅读(自己找的)</h3><img src="${thistbr}" class="wi"/></div>`;
+        document.body.innerHTML+=`<div class="ele" onclick="dj(this);"><h3>时间：${work[i].time}</h3><br><h3>翻译句子</h3><p style="display:inline;">${works}</p><br><h3>作业</h3><p>${needs}</p><br><h3>概要补全(网上找的)</h3><img src="${thissc}" class="wi"/><br><h3>任务型阅读(网上找的)</h3><img src="${thistbr}" class="wi"/></div>`;
       }else{
         document.body.innerHTML+=`<div class="ele" onclick="dj(this);"><h3>时间：${work[i].time}</h3><br><h3>翻译句子</h3><p style="display:inline;">${works}</p><br><h3>作业</h3><p>${needs}</p></div>`;
       }
